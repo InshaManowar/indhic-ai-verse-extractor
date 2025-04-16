@@ -6,7 +6,7 @@ Configuration settings for the Ashtavakra Gita Verse Extractor.
 DEFAULT_URL = "https://gretil.sub.uni-goettingen.de/gretil/corpustei/transformations/plaintext/sa_aSTAvakragItA.txt"
 
 # Default output path
-DEFAULT_OUTPUT_PATH = "verses.json"
+DEFAULT_OUTPUT_PATH = "output/verses.json"
 
 # Regular expression for verse format
 VERSE_PATTERN = r'(.*?)//\s*Avg_(\d+\.\d+)\s*$'

@@ -55,4 +55,8 @@ logs
 
 # Build directories
 dist/
-build/ 
+build/
+
+
+
+__pycache__

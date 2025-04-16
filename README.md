@@ -136,6 +136,3 @@ verses = extractor.save_to_json("output.json")
 5. **Error Handling**:
    - The code includes robust error handling for failed URL fetches, file reading errors, and parsing issues.
 
-## License
-
-MIT

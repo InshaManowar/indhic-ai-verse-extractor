@@ -116,6 +116,11 @@ class VerseExtractor:
         """
         verses = self.extract_verses()
         
+        # Ensure output directory exists
+        output_dir = os.path.dirname(output_path)
+        if output_dir and not os.path.exists(output_dir):
+            os.makedirs(output_dir)
+        
         with open(output_path, 'w', encoding='utf-8') as f:
             json.dump(verses, f, ensure_ascii=False, indent=2)
             
