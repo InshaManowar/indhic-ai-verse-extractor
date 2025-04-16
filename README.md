@@ -31,7 +31,7 @@ And outputs them as JSON:
 1. Clone the repository:
 
 ```bash
-[git clone https://github.com/yourusername/ashtavakra-gita-extractor.git](https://github.com/InshaManowar/indhic-ai-verse-extractor)
+git clone https://github.com/yourusername/ashtavakra-gita-extractor.git
 cd indhic-ai-verse-extractor
 ```
 
