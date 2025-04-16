@@ -32,7 +32,7 @@ And outputs them as JSON:
 
 ```bash
 git clone https://github.com/yourusername/ashtavakra-gita-extractor.git
-cd ashtavakra-gita-extractor
+cd indhic-ai-verse-extractor
 ```
 
 2. Install dependencies:
