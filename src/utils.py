@@ -55,6 +55,8 @@ def normalize_whitespace(text: str) -> str:
 def group_verse_lines(lines: List[str]) -> List[Dict[str, str]]:
     """
     Group lines into verses with their indices.
+    Sanskrit verses typically consist of two lines with the verse index at the end
+    of the second line.
 
     Args:
         lines (List[str]): Lines to process.
@@ -63,38 +65,58 @@ def group_verse_lines(lines: List[str]) -> List[Dict[str, str]]:
         List[Dict[str, str]]: List of dictionaries with verse content and index.
     """
     verses = []
-    current_verse_lines = []
-    current_index = None
+    pending_lines = []
+    i = 0
     
-    for line in lines:
-        line = line.strip()
+    while i < len(lines):
+        line = lines[i].strip()
+        i += 1
+        
         if not line:
             continue
-            
+        
+        # Check if this line contains a verse marker
         verse_content, verse_index = detect_verse_format(line)
         
         if verse_content is not None:
-            # If we have collected lines from a previous verse, save it
-            if current_verse_lines and current_index:
+            # This line has a verse marker
+            if pending_lines:
+                # If we have a pending line, combine it with this line to form a complete verse
+                complete_verse = [pending_lines[-1], verse_content]
                 verses.append({
-                    "verse": "\n".join(current_verse_lines),
-                    "index": current_index
+                    "verse": "\n".join(complete_verse),
+                    "index": verse_index
                 })
-            
-            # Start a new verse
-            current_verse_lines = [verse_content]
-            current_index = verse_index
+                pending_lines = []
+            else:
+                # If there's no pending line, just add this line as a verse
+                verses.append({
+                    "verse": verse_content,
+                    "index": verse_index
+                })
         else:
-            # Continue collecting lines for the current verse
-            if current_verse_lines:  # Only append if we're collecting a verse
-                current_verse_lines.append(line)
+            # Line without a verse marker - store it as a pending line
+            pending_lines.append(line)
+            
+            # But check if the next line has a verse marker
+            if i < len(lines):
+                next_line = lines[i].strip()
+                if next_line:  # Skip empty lines
+                    next_content, next_index = detect_verse_format(next_line)
+                    if next_content is not None:
+                        # Next line has a marker, so together they form a verse
+                        verses.append({
+                            "verse": line + "\n" + next_content,
+                            "index": next_index
+                        })
+                        i += 1  # Skip the next line since we've processed it
+                        pending_lines = []
     
-    # Add the last verse if there is one
-    if current_verse_lines and current_index:
-        verses.append({
-            "verse": "\n".join(current_verse_lines),
-            "index": current_index
-        })
+    # Handle any remaining pending lines (should be rare in well-formed input)
+    if pending_lines and len(verses) > 0:
+        # If we have an incomplete verse at the end, add it to the last verse
+        last_verse = verses[-1]["verse"]
+        verses[-1]["verse"] = last_verse + "\n" + "\n".join(pending_lines)
         
     return verses
 
