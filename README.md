@@ -31,8 +31,8 @@ And outputs them as JSON:
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/yourusername/ashtavakra-gita-extractor.git
-cd ashtavakra-gita-extractor
+[git clone https://github.com/yourusername/ashtavakra-gita-extractor.git](https://github.com/InshaManowar/indhic-ai-verse-extractor)
+cd indhic-ai-verse-extractor
 ```
 
 2. Install dependencies:
